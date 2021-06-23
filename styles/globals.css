@@ -1,16 +1,78 @@
+:root {
+  --background: #141519;
+  --sidebar: #191a1f;
+  --textColor: #fff;
+  --textColorDesc: gray;
+}
+
 html,
 body {
   padding: 0;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  background-color: var(--background);
+  color: var(--textColor);
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+body::-webkit-scrollbar {
+  width: 1em;
+}
+
+body::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.7);
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: darkgray;
+  outline: 1px solid slategray;
 }
 
 * {
   box-sizing: border-box;
+}
+
+.desc {
+  color: var(--textColorDesc);
+}
+
+main {
+  display: flex;
+  min-height: 100vh;
+}
+
+.Content {
+  width: 100%;
+}
+
+.flexCenter {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.Sidebar {
+  min-width: 18.125%;
+  background-color: var(--sidebar);
+}
+
+@media screen and (max-width: 960px) {
+  .Sidebar {
+    min-width: 100%;
+    height: 8em;
+    display: block;
+  }
+  main {
+    flex-direction: column;
+  }
+}
+
+a:link,
+a:visited,
+a:hover,
+a:active {
+  text-decoration: none;
+  color: #fff;
 }
