@@ -25,13 +25,15 @@ class MyDocument extends Document {
             <meta property="og:type" content="website" />
             <meta property="og:url" content="https://rgd.chat/" />
             <meta property="og:title" content="Russian Gamedev" />
-            <meta property="og:description" content="" />
+            <meta
+              property="og:description"
+              content="Если вы — крутой прогер, моделлер, дизигнер, художник, аниматор или просто задрот хороший специалист
+    — значит, вы пришли по адресу и можете принять участие в жизни лампового комьюнити,
+    которое точно оценит ваш скилл."
+            />
             <meta property="og:image" content="rgd.png" />
-            <meta property="twitter:card" content="rgd.png" />
-            <meta property="twitter:url" content="https://rgd.chat/" />
-            <meta property="twitter:title" content="Russian Gamedev" />
-            <meta property="twitter:description" content="" />
-            <meta property="twitter:image" content="rgd.png"></meta>
+            <meta property="og:image:width" content="128" />
+            <meta property="og:image:height" content="128" />
           </Head>
           <body>
             <Main />
