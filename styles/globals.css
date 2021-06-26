@@ -43,10 +43,14 @@ main {
 
 .Content {
   width: 100%;
+  padding: 0em 2em;
 }
 
 .Sidebar {
-  min-width: 18.125%;
+  width: 280px;
+  max-width: 25%;
+  flex-basis: 280px;
+  flex-shrink: 0;
   background-color: var(--sidebar);
 }
 
