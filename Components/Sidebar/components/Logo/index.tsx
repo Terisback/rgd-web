@@ -6,9 +6,10 @@ import { useCookies } from "react-cookie";
 
 import { AppContext } from "../../../../libs/context";
 import Loading from "../../../loading";
+import UserAvatar from "../../../useful/UserAvatar";
 
 const discordAuth =
-  "https://discord.com/api/oauth2/authorize?client_id=854466540673433632&redirect_uri=https%3A%2F%2Frgd-api.damirlut.tk%2Fdiscord&response_type=code&scope=identify%20guilds";
+  "https://discord.com/api/oauth2/authorize?client_id=854466540673433632&redirect_uri=https%3A%2F%2Fapi.rgd.chat%2Fdiscord&response_type=code&scope=identify%20guilds";
 
 export default function Logo() {
   const [cookie] = useCookies(["token"]);
@@ -52,7 +53,7 @@ export default function Logo() {
         <div className={style.DiscordProfile}>
           <Link href={profileUrl}>
             <a href={profileUrl} className={style.DiscordProfileContent}>
-              <img src={context.User.avatar} width="40px" height="40px" />
+              <UserAvatar src={context.User.avatar} />
               <div className={style.DiscordProfileNick}>
                 <div>{context.User.username}</div>
                 <div>#{context.User.tag}</div>
@@ -61,14 +62,16 @@ export default function Logo() {
           </Link>
         </div>
       ) : state === "loading" ? (
-        <div>
-          <Loading />
+        <div className={style.DiscordProfile}>
+          <div className={style.DiscordProfileContent}>
+            <Loading />
+          </div>
         </div>
       ) : (
         <div className={style.DiscordButton}>
           <a className={style.DiscordButtonContent} href={discordAuth}>
             <img src="/icons/icon_0.svg" width="32em" />
-            Присоединиться
+            Войти
           </a>
         </div>
       )}

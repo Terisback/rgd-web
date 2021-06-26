@@ -27,7 +27,7 @@ class MyDocument extends Document {
             <meta property="og:title" content="Russian Gamedev" />
             <meta property="og:description" content="" />
             <meta property="og:image" content="rgd.png" />
-            <meta property="twitter:card" content="summary_large_image" />
+            <meta property="twitter:card" content="rgd.png" />
             <meta property="twitter:url" content="https://rgd.chat/" />
             <meta property="twitter:title" content="Russian Gamedev" />
             <meta property="twitter:description" content="" />

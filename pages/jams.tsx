@@ -4,6 +4,7 @@ import API from "../libs/api";
 import Link from "next/link";
 import style from "../styles/jams.module.css";
 import Loading from "../Components/loading";
+import FlexCenter from "../Components/useful/FlexCenter";
 
 export function Jam({
   preview,
@@ -37,7 +38,7 @@ export default function Jems() {
     API.getJams().then(setJams);
   }, []);
   return (
-    <div className="flexCenter">
+    <FlexCenter>
       <div className={style.container}>
         <h1 className={style.title}>
           <div>
@@ -54,6 +55,6 @@ export default function Jems() {
           )}
         </div>
       </div>
-    </div>
+    </FlexCenter>
   );
 }

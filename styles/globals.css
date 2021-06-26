@@ -45,14 +45,6 @@ main {
   width: 100%;
 }
 
-.flexCenter {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-}
-
 .Sidebar {
   min-width: 18.125%;
   background-color: var(--sidebar);

@@ -8,6 +8,8 @@ import style from "../../styles/jam.module.css";
 import { IUser, JamData } from "../../libs/api";
 import Loading from "../../Components/loading";
 import API from "../../libs/api";
+import FlexCenter from "../../Components/useful/FlexCenter";
+import UserAvatar from "../../Components/useful/UserAvatar";
 
 function numberFormat(num: number): String {
   return String(num).replace(/(.)(?=(\d{3})+$)/g, "$1 ");
@@ -96,14 +98,18 @@ const Game = (props: any) => {
       <img src={props.preview} />
       <span>
         {props.pos < 4 ? (
-          <img src={`/icons/icon_medal_${props.pos + 1}.svg`} width="32em" />
+          <img
+            src={`/icons/icon_medal_${props.pos + 1}.svg`}
+            width="32em"
+            alt="награда"
+          />
         ) : (
           ""
         )}
       </span>
       <div>
         <div className={style.jamAuthor}>
-          <img src={user.avatar} width="32em" />
+          <UserAvatar src={user.avatar} />
           <div>{user.username}</div>
         </div>
         <div className={style.jamDesc}>
@@ -130,7 +136,7 @@ export default function JamByID() {
     );
   }
   return (
-    <div className="flexCenter">
+    <FlexCenter>
       <Head>
         <title>{jam?.title}</title>
       </Head>
@@ -166,6 +172,6 @@ export default function JamByID() {
           </div>
         </div>
       </div>
-    </div>
+    </FlexCenter>
   );
 }

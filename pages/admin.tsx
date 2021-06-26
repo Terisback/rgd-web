@@ -7,6 +7,7 @@ import style from "../styles/admin.module.css";
 import API, { IUser } from "../libs/api";
 
 import { useRouter } from "next/router";
+import FlexCenter from "../Components/useful/FlexCenter";
 
 export default function Admin() {
   const context = React.useContext(AppContext);
@@ -66,7 +67,7 @@ export default function Admin() {
 
   if (typeof window === "undefined") return "";
   return (
-    <div className="flexCenter">
+    <FlexCenter>
       <div>
         <input ref={input} list="search" onChange={onSearchInput} />
         <datalist id="search">
@@ -99,6 +100,6 @@ export default function Admin() {
         <input type="date" onChange={dateHandle} />
         <button onClick={Sumbit}>Отправить</button>
       </div>
-    </div>
+    </FlexCenter>
   );
 }

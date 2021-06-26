@@ -8,6 +8,7 @@ import style from "../../styles/user.module.css";
 
 import API from "../../libs/api";
 import Loading from "../../Components/loading";
+import FlexCenter from "../../Components/useful/FlexCenter";
 
 import Head from "next/head";
 
@@ -47,21 +48,6 @@ const Tab = ({ children, tabId, activeTab }: TabProps) => {
   return <div ref={_tab}>{children}</div>;
 };
 
-const testProject: Array<IProject> = [
-  {
-    name: "RGD-web",
-    preview: "https://rgd-api.damirlut.tk/file/test-project.png",
-  },
-  {
-    name: "RGD-web",
-    preview: "https://rgd-api.damirlut.tk/file/test-project.png",
-  },
-  {
-    name: "RGD-web",
-    preview: "https://rgd-api.damirlut.tk/file/test-project.png",
-  },
-];
-
 const Project = ({ name, preview }: IProject) => {
   return (
     <div className={style.project}>
@@ -74,6 +60,14 @@ const Project = ({ name, preview }: IProject) => {
         <div>Просмотров: 999</div>
         <div>Лайков: 999</div>
       </div>
+    </div>
+  );
+};
+
+const ProjectAdd = () => {
+  return (
+    <div className={style.project}>
+      <div className={style.projectBody}>Добавить</div>
     </div>
   );
 };
@@ -100,7 +94,7 @@ export default function Profile() {
     return <Loading />;
   }
   return (
-    <div className="flexCenter">
+    <FlexCenter>
       <Head>
         <title>{user.username}</title>
       </Head>
@@ -162,9 +156,7 @@ export default function Profile() {
               </Tab>
               <Tab tabId="projects" activeTab={activeTab}>
                 <div className={style.projectGrid}>
-                  {testProject.map((project) => (
-                    <Project {...project} />
-                  ))}
+                  <ProjectAdd />
                 </div>
               </Tab>
               <Tab tabId="svistelka" activeTab={activeTab}>
@@ -174,6 +166,6 @@ export default function Profile() {
           </div>
         </div>
       </div>
-    </div>
+    </FlexCenter>
   );
 }
