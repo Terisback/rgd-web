@@ -17,7 +17,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   const title = elements.find(
     (element) => element.href === router.asPath
-  )?.title;
+  )?.title ?? "???";
   return (
     <AppContext.Provider value={{ User, setUser }}>
       <main>
