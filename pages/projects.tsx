@@ -35,7 +35,7 @@ const Project = ({ project, preview, description, user_id, id }: IProject) => {
       <img src={preview} />
       <div className={style.projectBody}>
         <h3>{project}</h3>
-        <div>{description}</div>
+        <div>{description.slice(0, 70) + "..."}</div>
       </div>
       <div className={style.projectFooter}>
         {authors.map((author: IUser, index) => (
