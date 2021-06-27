@@ -2,6 +2,8 @@ import React from "react";
 import UserAvatar from "../Components/useful/UserAvatar";
 import API, { IProject, IUser } from "../libs/api";
 
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
+
 import style from "../styles/projects.module.css";
 
 const Project = ({ project, preview, description, user_id, id }: IProject) => {
@@ -50,19 +52,24 @@ const Project = ({ project, preview, description, user_id, id }: IProject) => {
   );
 };
 
-export default function Projects() {
-  const [projects, setProject] = React.useState([] as Array<IProject>);
-  React.useEffect(() => {
-    API.getProjects().then(setProject);
-  }, []);
+export default function Projects({
+  data,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <section>
       <h3>Проектики сообщества</h3>
       <div className={style.projectGrid}>
-        {projects.map((project, index) => (
+        {data.map((project: IProject, index: number) => (
           <Project key={"project_" + index} {...project} />
         ))}
       </div>
     </section>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  const data: Array<IProject> = await API.getProjects();
+  return {
+    props: { data },
+  };
+};

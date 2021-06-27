@@ -1,13 +1,11 @@
 import React from "react";
-import { GetStaticProps } from "next";
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 
-import { useRouter } from "next/router";
 import { IProject, IUser } from "../../libs/api";
 
 import style from "../../styles/user.module.css";
 
 import API from "../../libs/api";
-import Loading from "../../Components/loading";
 import FlexCenter from "../../Components/useful/FlexCenter";
 
 import Head from "next/head";
@@ -72,33 +70,15 @@ const ProjectAdd = () => {
   );
 };
 
-export default function Profile() {
-  const [user, setUser] = React.useState({} as IUser);
-  const Router = useRouter();
-
+export default function Profile({
+  data,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const [activeTab, setActiveTab] = React.useState("stats");
 
   const buttonTabHandle = (e: React.MouseEvent<HTMLElement>) => {
     setActiveTab(e.currentTarget.id);
   };
-
-  const { id } = Router.query;
-  React.useEffect(() => {
-    if (id == undefined) return;
-    API.getUser(id as string).then((u) => {
-      if (Object.keys(u).length > 0) {
-        setUser(u);
-      } else {
-        setUser({ id: "-1" } as IUser);
-      }
-    });
-  }, [id]);
-  if (!user?.id) {
-    return <Loading />;
-  }
-  if (user?.id === "-1") {
-    return <div>Пользователь не найден</div>;
-  }
+  const user: IUser = data;
   return (
     <FlexCenter>
       <Head>
@@ -161,9 +141,7 @@ export default function Profile() {
                 </div>
               </Tab>
               <Tab tabId="projects" activeTab={activeTab}>
-                <div className={style.projectGrid}>
-                  <ProjectAdd />
-                </div>
+                <div className={style.projectGrid}></div>
               </Tab>
               <Tab tabId="svistelka" activeTab={activeTab}>
                 что либо еще
@@ -175,3 +153,10 @@ export default function Profile() {
     </FlexCenter>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const data: IUser = await API.getUser(context.query.id as string);
+  return {
+    props: { data },
+  };
+};

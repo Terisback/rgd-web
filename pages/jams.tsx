@@ -5,6 +5,7 @@ import Link from "next/link";
 import style from "../styles/jams.module.css";
 import Loading from "../Components/loading";
 import FlexCenter from "../Components/useful/FlexCenter";
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 
 export function Jam({
   preview,
@@ -32,11 +33,9 @@ export function Jam({
   );
 }
 
-export default function Jems() {
-  const [jams, setJams] = React.useState<Array<JamData>>([]);
-  React.useEffect(() => {
-    API.getJams().then(setJams);
-  }, []);
+export default function Jems({
+  data,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <FlexCenter>
       <div className={style.container}>
@@ -48,13 +47,21 @@ export default function Jems() {
           <div>back</div>
         </h1>
         <div className={style.jams}>
-          {jams.length == 0 ? (
+          {data.length == 0 ? (
             <Loading />
           ) : (
-            jams.map((data, index) => <Jam {...data} key={`jam_${index}`} />)
+            data.map((value: JamData, index: number) => (
+              <Jam {...value} key={`jam_${index}`} />
+            ))
           )}
         </div>
       </div>
     </FlexCenter>
   );
 }
+export const getServerSideProps: GetServerSideProps = async () => {
+  const data: Array<JamData> = await API.getJams();
+  return {
+    props: { data },
+  };
+};
