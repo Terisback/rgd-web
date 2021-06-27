@@ -16,7 +16,6 @@ export default function Logo() {
   const context = React.useContext(AppContext);
   const profileUrl = "/user/" + context.User?.id;
   const [state, setState] = React.useState("failed");
-  console.log(context);
   const backtotopButton = React.useRef(null);
   if (typeof window !== "undefined") {
     window.onscroll = () => {

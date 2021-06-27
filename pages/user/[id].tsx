@@ -48,12 +48,12 @@ const Tab = ({ children, tabId, activeTab }: TabProps) => {
   return <div ref={_tab}>{children}</div>;
 };
 
-const Project = ({ name, preview }: IProject) => {
+const Project = ({ project, preview }: IProject) => {
   return (
     <div className={style.project}>
       <img src={preview} />
       <div className={style.projectBody}>
-        <h3>{name}</h3>
+        <h3>{project}</h3>
         <div>Типа описание</div>
       </div>
       <div className={style.projectFooter}>
@@ -85,13 +85,19 @@ export default function Profile() {
   const { id } = Router.query;
   React.useEffect(() => {
     if (id == undefined) return;
-    console.log(`Request data (${id})`);
     API.getUser(id as string).then((u) => {
-      setUser(u);
+      if (Object.keys(u).length > 0) {
+        setUser(u);
+      } else {
+        setUser({ id: "-1" } as IUser);
+      }
     });
   }, [id]);
   if (!user?.id) {
     return <Loading />;
+  }
+  if (user?.id === "-1") {
+    return <div>Пользователь не найден</div>;
   }
   return (
     <FlexCenter>

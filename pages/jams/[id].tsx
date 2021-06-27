@@ -22,8 +22,7 @@ const games = [
     user: {},
     description:
       "ОХУЕННАЯ ИГРА НА ДЖЕМ В ДИСКОРДЕ С ШИЗИКАМИ РАЗНОГО ПОЛА И ВОЗРАСТА ЛЮБОЙ ОРИЕНТАЦИИ",
-    preview:
-      "https://rgd-api.damirlut.tk/file/338b8000-19d3-4e3a-8198-df2c7821d845.png",
+    preview: "https://api.rgd.chat/file/not-find.png",
   },
   {
     id: 1,
@@ -31,8 +30,7 @@ const games = [
     user: {},
     description:
       "ОХУЕННАЯ ИГРА НА ДЖЕМ В ДИСКОРДЕ С ШИЗИКАМИ РАЗНОГО ПОЛА И ВОЗРАСТА ЛЮБОЙ ОРИЕНТАЦИИ",
-    preview:
-      "https://rgd-api.damirlut.tk/file/338b8000-19d3-4e3a-8198-df2c7821d845.png",
+    preview: "https://api.rgd.chat/file/not-find.png",
   },
   {
     id: 2,
@@ -40,8 +38,7 @@ const games = [
     user: {},
     description:
       "ОХУЕННАЯ ИГРА НА ДЖЕМ В ДИСКОРДЕ С ШИЗИКАМИ РАЗНОГО ПОЛА И ВОЗРАСТА ЛЮБОЙ ОРИЕНТАЦИИ",
-    preview:
-      "https://rgd-api.damirlut.tk/file/338b8000-19d3-4e3a-8198-df2c7821d845.png",
+    preview: "https://api.rgd.chat/file/not-find.png",
   },
   {
     id: 3,
@@ -49,8 +46,7 @@ const games = [
     user: {},
     description:
       "ОХУЕННАЯ ИГРА НА ДЖЕМ В ДИСКОРДЕ С ШИЗИКАМИ РАЗНОГО ПОЛА И ВОЗРАСТА ЛЮБОЙ ОРИЕНТАЦИИ",
-    preview:
-      "https://rgd-api.damirlut.tk/file/338b8000-19d3-4e3a-8198-df2c7821d845.png",
+    preview: "https://api.rgd.chat/file/not-find.png",
   },
   {
     id: 4,
@@ -58,8 +54,7 @@ const games = [
     user: {},
     description:
       "ОХУЕННАЯ ИГРА НА ДЖЕМ В ДИСКОРДЕ С ШИЗИКАМИ РАЗНОГО ПОЛА И ВОЗРАСТА ЛЮБОЙ ОРИЕНТАЦИИ",
-    preview:
-      "https://rgd-api.damirlut.tk/file/338b8000-19d3-4e3a-8198-df2c7821d845.png",
+    preview: "https://api.rgd.chat/file/not-find.png",
   },
   {
     id: 5,
@@ -67,8 +62,7 @@ const games = [
     user: {},
     description:
       "ОХУЕННАЯ ИГРА НА ДЖЕМ В ДИСКОРДЕ С ШИЗИКАМИ РАЗНОГО ПОЛА И ВОЗРАСТА ЛЮБОЙ ОРИЕНТАЦИИ",
-    preview:
-      "https://rgd-api.damirlut.tk/file/338b8000-19d3-4e3a-8198-df2c7821d845.png",
+    preview: "https://api.rgd.chat/file/not-find.png",
   },
   {
     id: 6,
@@ -76,8 +70,7 @@ const games = [
     user: {},
     description:
       "ОХУЕННАЯ ИГРА НА ДЖЕМ В ДИСКОРДЕ С ШИЗИКАМИ РАЗНОГО ПОЛА И ВОЗРАСТА ЛЮБОЙ ОРИЕНТАЦИИ",
-    preview:
-      "https://rgd-api.damirlut.tk/file/338b8000-19d3-4e3a-8198-df2c7821d845.png",
+    preview: "https://api.rgd.chat/file/not-find.png",
   },
 ];
 

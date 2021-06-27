@@ -1,5 +1,12 @@
 import axios from "axios";
 
+export interface IProject {
+  id: number;
+  user_id: Array<string>;
+  project: string;
+  preview: string;
+  description: string;
+}
 export interface JamData {
   preview: string;
   title: string;
@@ -17,11 +24,6 @@ export interface IRole {
   id: string;
   name: string;
   color: string;
-}
-
-export interface IProject {
-  name: string;
-  preview: string;
 }
 
 export interface IUser {
@@ -95,5 +97,10 @@ export default class API {
       `${URL}user.search?text=${encodeURIComponent(query)}`
     );
     return data;
+  }
+
+  static async getProjects() {
+    const { data } = await axios(`${URL}projects/`);
+    return data as Array<IProject>;
   }
 }

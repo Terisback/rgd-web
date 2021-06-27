@@ -9,12 +9,13 @@ const elements = [
     title: "Информация",
     admin: false,
   },
-  /*{
-    href: "/",
+  {
+    href: "/projects",
     icon: "icon_1",
     title: "Игры сообщества",
     admin: false,
   },
+  /*
   {
     href: "/tutorials",
     icon: "icon_2",
