@@ -2,7 +2,7 @@ import axios from "axios";
 
 export interface IProject {
     id: number;
-    user_id: Array<string>;
+    user_id: Array<IUser>;
     project: string;
     preview: string;
     description: string;
@@ -14,7 +14,7 @@ export interface JamData {
     description: string;
     liveStatus: boolean;
     id: number;
-    games: Array<object>;
+    projects: Array<IProject>;
     fond: string;
     fondPerPlayer: number;
     votes: Array<object>;
@@ -102,5 +102,9 @@ export default class API {
     static async getProjects() {
         const { data } = await axios(`${URL}projects/`);
         return data as Array<IProject>;
+    }
+    static async getProject(id: number) {
+        const { data } = await axios(`${URL}projects/` + id);
+        return data as IProject;
     }
 }

@@ -1,170 +1,113 @@
 import React from "react";
-import { useRouter } from "next/router";
+
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 
 import Head from "next/head";
 
 import style from "../../styles/jam.module.css";
+import projectStyle from "../../styles/projects.module.css";
 
-import { IUser, JamData } from "../../libs/api";
-import Loading from "../../Components/loading";
+import { IProject, IUser, JamData } from "../../libs/api";
 import API from "../../libs/api";
 import FlexCenter from "../../Components/useful/FlexCenter";
 import UserAvatar from "../../Components/useful/UserAvatar";
 
 function numberFormat(num: number): String {
-  return String(num).replace(/(.)(?=(\d{3})+$)/g, "$1 ");
+    return String(num).replace(/(.)(?=(\d{3})+$)/g, "$1 ");
 }
 
-const games = [
-  {
-    id: 0,
-    user_id: "357130048882343937",
-    user: {},
-    description:
-      "ОХУЕННАЯ ИГРА НА ДЖЕМ В ДИСКОРДЕ С ШИЗИКАМИ РАЗНОГО ПОЛА И ВОЗРАСТА ЛЮБОЙ ОРИЕНТАЦИИ",
-    preview: "https://api.rgd.chat/file/not-find.png",
-  },
-  {
-    id: 1,
-    user_id: "357130048882343937",
-    user: {},
-    description:
-      "ОХУЕННАЯ ИГРА НА ДЖЕМ В ДИСКОРДЕ С ШИЗИКАМИ РАЗНОГО ПОЛА И ВОЗРАСТА ЛЮБОЙ ОРИЕНТАЦИИ",
-    preview: "https://api.rgd.chat/file/not-find.png",
-  },
-  {
-    id: 2,
-    user_id: "357130048882343937",
-    user: {},
-    description:
-      "ОХУЕННАЯ ИГРА НА ДЖЕМ В ДИСКОРДЕ С ШИЗИКАМИ РАЗНОГО ПОЛА И ВОЗРАСТА ЛЮБОЙ ОРИЕНТАЦИИ",
-    preview: "https://api.rgd.chat/file/not-find.png",
-  },
-  {
-    id: 3,
-    user_id: "357130048882343937",
-    user: {},
-    description:
-      "ОХУЕННАЯ ИГРА НА ДЖЕМ В ДИСКОРДЕ С ШИЗИКАМИ РАЗНОГО ПОЛА И ВОЗРАСТА ЛЮБОЙ ОРИЕНТАЦИИ",
-    preview: "https://api.rgd.chat/file/not-find.png",
-  },
-  {
-    id: 4,
-    user_id: "357130048882343937",
-    user: {},
-    description:
-      "ОХУЕННАЯ ИГРА НА ДЖЕМ В ДИСКОРДЕ С ШИЗИКАМИ РАЗНОГО ПОЛА И ВОЗРАСТА ЛЮБОЙ ОРИЕНТАЦИИ",
-    preview: "https://api.rgd.chat/file/not-find.png",
-  },
-  {
-    id: 5,
-    user_id: "357130048882343937",
-    user: {},
-    description:
-      "ОХУЕННАЯ ИГРА НА ДЖЕМ В ДИСКОРДЕ С ШИЗИКАМИ РАЗНОГО ПОЛА И ВОЗРАСТА ЛЮБОЙ ОРИЕНТАЦИИ",
-    preview: "https://api.rgd.chat/file/not-find.png",
-  },
-  {
-    id: 6,
-    user_id: "357130048882343937",
-    user: {},
-    description:
-      "ОХУЕННАЯ ИГРА НА ДЖЕМ В ДИСКОРДЕ С ШИЗИКАМИ РАЗНОГО ПОЛА И ВОЗРАСТА ЛЮБОЙ ОРИЕНТАЦИИ",
-    preview: "https://api.rgd.chat/file/not-find.png",
-  },
-];
+interface GameProps {
+    game: IProject;
+    pos: number;
+}
 
-const Game = (props: any) => {
-  const [user, setUser] = React.useState({} as IUser);
-  React.useEffect(() => {
-    API.getUser(props.user_id).then(setUser);
-  }, []);
-  if (Object.keys(user).length === 0) {
+const Game = ({ game, pos }: GameProps) => {
     return (
-      <div className={style.game}>
-        <Loading />
-      </div>
+        <div className={projectStyle.project}>
+            <img src={game.preview} />
+            <div className={projectStyle.projectBody}>
+                <h3>{game.project}</h3>
+                <div>{game.description.slice(0, 70) + "..."}</div>
+            </div>
+            <div className={projectStyle.projectFooter}>
+                {game.user_id.map((author: IUser, index: number) => (
+                    <div key={"author_" + author.id + "_" + index}>
+                        <UserAvatar src={author.avatar} size={16} />
+                        <a href={"/user/" + author.id}>{author.username}</a>
+                    </div>
+                ))}
+            </div>
+        </div>
     );
-  }
-  return (
-    <div className={style.game}>
-      <img src={props.preview} />
-      <span>
-        {props.pos < 4 ? (
-          <img
-            src={`/icons/icon_medal_${props.pos + 1}.svg`}
-            width="32em"
-            alt="награда"
-          />
-        ) : (
-          ""
-        )}
-      </span>
-      <div>
-        <div className={style.jamAuthor}>
-          <UserAvatar src={user.avatar} />
-          <div>{user.username}</div>
-        </div>
-        <div className={style.jamDesc}>
-          {props.description.slice(0, 47) + "..."}
-        </div>
-      </div>
-    </div>
-  );
 };
 
-export default function JamByID() {
-  const [jam, setJam] = React.useState<JamData>();
-  const Router = useRouter();
-  const { id } = Router.query;
-  React.useEffect(() => {
-    if (id === undefined) return;
-    API.getJam(Number(id)).then(setJam);
-  }, [id]);
-  if (!jam) {
+export default function JamByID({
+    jam,
+    users,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
     return (
-      <div className="flexCenter">
-        <Loading />
-      </div>
-    );
-  }
-  return (
-    <FlexCenter>
-      <Head>
-        <title>{jam?.title}</title>
-      </Head>
-      <div>
-        <div className={style.title}>
-          <h1>{jam?.title}</h1>
-          <img src={jam?.preview} />
-        </div>
-        <div className={style.main}>
-          <div>
-            <h3>Дата проведения</h3>
-            <div className="desc">{jam.date}</div>
-          </div>
-          <div>
-            <h3>Призовой фонд</h3>
-            <div className="desc">{jam.fond}</div>
-          </div>
-          <div>
-            <h3>Описание</h3>
-            <div className="desc">{jam.description}</div>
-          </div>
-          <div className={style.gamesContainer}>
-            <h2>Игры</h2>
+        <FlexCenter>
+            <Head>
+                <title>{jam?.title}</title>
+            </Head>
             <div>
-              {games.map((game, index) => (
-                <Game {...game} key={"game_" + game.id} pos={index} />
-              ))}
+                <div className={style.title}>
+                    <h1>{jam?.title}</h1>
+                    <img src={jam?.preview} />
+                </div>
+                <div className={style.main}>
+                    <div>
+                        <h3>Дата проведения</h3>
+                        <div className="desc">{jam.date}</div>
+                    </div>
+                    <div>
+                        <h3>Призовой фонд</h3>
+                        <div className="desc">{jam.fond}</div>
+                    </div>
+                    <div>
+                        <h3>Описание</h3>
+                        <div className="desc">{jam.description}</div>
+                    </div>
+                    <div className={style.gamesContainer}>
+                        <h2>Игры</h2>
+                        <div>
+                            {jam.projects.map(
+                                (game: IProject, index: number) => (
+                                    <Game
+                                        game={game}
+                                        key={"game_" + game.id}
+                                        pos={index}
+                                    />
+                                )
+                            )}
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-          <div>
-            <h2>Голосование</h2>
-            сетка...
-          </div>
-        </div>
-      </div>
-    </FlexCenter>
-  );
+        </FlexCenter>
+    );
 }
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+    const jam: JamData = await API.getJam(Number(context.query.id));
+    for (let i = 0; i < jam.projects.length; i++) {
+        ///@ts-ignore
+        jam.projects[i] = await API.getProject(jam.projects[i]);
+        for (let k = 0; k < jam.projects[i].user_id.length; k++) {
+            let user: string = jam.projects[i].user_id[k].toString();
+            if (!user.startsWith("-1")) {
+                const data: Array<IUser> = await API.getUser(user);
+                jam.projects[i].user_id[k] = data[0];
+            } else {
+                jam.projects[i].user_id[k] = {
+                    id: user,
+                    username: `Нужно уточнить( ${user.replace("-1-", "")} )`,
+                    avatar: "https://api.rgd.chat/file/not-find.png",
+                } as IUser;
+            }
+        }
+    }
+    return {
+        props: { jam },
+    };
+};
