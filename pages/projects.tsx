@@ -11,9 +11,8 @@ const Project = ({ project, preview, description, user_id, id }: IProject) => {
     React.useEffect(() => {
         const fetch = async () => {
             const list: Array<IUser> = [];
-            for (let user of user_id) {
-                ///@ts-ignore
-                user = user.toString();
+            for (let u of user_id) {
+                let user: string = u.toString();
                 if (user.startsWith("-1")) {
                     list.push({
                         id: "-1-" + id,
