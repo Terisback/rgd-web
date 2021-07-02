@@ -12,6 +12,7 @@ const Project = ({ project, preview, description, user_id, id }: IProject) => {
         const fetch = async () => {
             const list: Array<IUser> = [];
             for (let user of user_id) {
+                ///@ts-ignore
                 user = user.toString();
                 if (user.startsWith("-1")) {
                     list.push({
