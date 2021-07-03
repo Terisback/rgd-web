@@ -12,10 +12,6 @@ import API from "../../libs/api";
 import FlexCenter from "../../Components/useful/FlexCenter";
 import UserAvatar from "../../Components/useful/UserAvatar";
 
-function numberFormat(num: number): String {
-    return String(num).replace(/(.)(?=(\d{3})+$)/g, "$1 ");
-}
-
 interface GameProps {
     game: IProject;
     pos: number;
@@ -68,6 +64,14 @@ export default function JamByID({
                         <h3>Описание</h3>
                         <div className="desc">{jam.description}</div>
                     </div>
+                    <div>
+                        <h3>Стрим</h3>
+                        <div className="desk">
+                            <a href={jam.stream} className={style.youtube}>
+                                YouTube
+                            </a>
+                        </div>
+                    </div>
                     <div className={style.gamesContainer}>
                         <h2>Игры</h2>
                         <div>
@@ -90,23 +94,6 @@ export default function JamByID({
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const jam: JamData = await API.getJam(Number(context.query.id));
-    for (let i = 0; i < jam.projects.length; i++) {
-        ///@ts-ignore
-        jam.projects[i] = await API.getProject(jam.projects[i]);
-        for (let k = 0; k < jam.projects[i].user_id.length; k++) {
-            let user: string = jam.projects[i].user_id[k].toString();
-            if (!user.startsWith("-1")) {
-                const data: Array<IUser> = await API.getUser(user);
-                jam.projects[i].user_id[k] = data[0];
-            } else {
-                jam.projects[i].user_id[k] = {
-                    id: user,
-                    username: `Нужно уточнить( ${user.replace("-1-", "")} )`,
-                    avatar: "https://api.rgd.chat/file/not-find.png",
-                } as IUser;
-            }
-        }
-    }
     return {
         props: { jam },
     };
