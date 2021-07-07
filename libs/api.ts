@@ -71,8 +71,8 @@ export const UserTemplate: IUser = {
     project: [],
 };
 
-//const URL = "https://api.rgd.chat/";
-const URL = "http://localhost:5001/";
+const URL = "https://api.rgd.chat/";
+//const URL = "http://localhost:5001/";
 export default class API {
     static token = "";
     static async getJams() {

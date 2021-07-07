@@ -57,7 +57,6 @@ function Jam({ jamData }: IJam) {
             if (project == event.target.id) {
                 var array = jam.projects;
                 array.splice(index, 1);
-                console.log("Элемент удален", project);
                 setJam({ ...jam, projects: array });
             }
         });
@@ -370,7 +369,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     API.token = context.req.cookies?.token;
     const user = await API.getUser();
     let isAdmin = false;
-    console.log(user);
     if (user.length > 0) {
         isAdmin = user[0].admin; //context.User.admin;
     }
