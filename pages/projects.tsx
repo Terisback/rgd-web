@@ -26,8 +26,6 @@ const Project = ({ project, preview, description, user_id, id }: IProject) => {
                     await API.getUser(user).then((u) => {
                         if (Object.keys(u).length > 0) {
                             list.push(u[0]);
-                        } else {
-                            console.log(u);
                         }
                     });
                 }

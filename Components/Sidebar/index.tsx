@@ -13,16 +13,17 @@ export default function Sidebar() {
     const context = React.useContext(AppContext);
     const router = useRouter();
     const [cookie, setCookie] = useCookies(["token"]);
+
+    if (router.query.token) {
+        setCookie("token", router.query.token);
+        window.location.href = window.location.origin;
+    }
+
     if (cookie.token) {
         API.token = cookie.token;
         if (context.User?.id === "") {
             API.getUser().then((users) => context.setUser(users[0]));
         }
-    }
-
-    if (router.query.token) {
-        setCookie("token", router.query.token);
-        window.location.href = window.location.origin;
     }
 
     return (

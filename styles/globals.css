@@ -1,73 +1,79 @@
 :root {
-  --background: #141519;
-  --sidebar: #191a1f;
-  --textColor: #fff;
-  --textColorDesc: gray;
+    --background: #141519;
+    --sidebar: #191a1f;
+    --textColor: #fff;
+    --textColorDesc: gray;
 }
 
 html,
 body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-  background-color: var(--background);
-  color: var(--textColor);
+    padding: 0;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+        Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+    background-color: var(--background);
+    color: var(--textColor);
 }
 
 body::-webkit-scrollbar {
-  width: 1em;
+    width: 1em;
 }
 
 body::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.7);
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.7);
 }
 
 body::-webkit-scrollbar-thumb {
-  background-color: darkgray;
-  outline: 1px solid slategray;
+    background-color: darkgray;
+    outline: 1px solid slategray;
 }
 
 * {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 .desc {
-  color: var(--textColorDesc);
+    color: var(--textColorDesc);
 }
 
 main {
-  display: flex;
-  min-height: 100vh;
+    display: flex;
+    min-height: 100vh;
 }
 
 .Content {
-  width: 100%;
-  padding: 0em 2em;
+    width: 100%;
+    padding: 0em 2em;
 }
 
 .Sidebar {
-  width: 280px;
-  max-width: 25%;
-  flex-basis: 280px;
-  flex-shrink: 0;
-  background-color: var(--sidebar);
+    width: 280px;
+    max-width: 25%;
+    flex-basis: 280px;
+    flex-shrink: 0;
+    background-color: var(--sidebar);
 }
 
 @media screen and (max-width: 960px) {
-  .Sidebar {
-    min-width: 100%;
-    display: block;
-  }
-  main {
-    flex-direction: column;
-  }
+    .Sidebar {
+        min-width: 100%;
+        display: block;
+    }
+    main {
+        flex-direction: column;
+    }
 }
 
 a:link,
 a:visited,
 a:hover,
 a:active {
-  text-decoration: none;
-  color: #fff;
+    text-decoration: none;
+    color: #fff;
+}
+
+tr,
+td,
+table {
+    border: 1px solid;
 }

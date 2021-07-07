@@ -18,6 +18,7 @@ export interface JamData {
     fond: string;
     fondPerPlayer: number;
     votes: Array<object>;
+    stream: string;
 }
 
 export interface IRole {
@@ -70,8 +71,8 @@ export const UserTemplate: IUser = {
     project: [],
 };
 
-const URL = "https://api.rgd.chat/";
-
+//const URL = "https://api.rgd.chat/";
+const URL = "http://localhost:5001/";
 export default class API {
     static token = "";
     static async getJams() {
@@ -106,5 +107,21 @@ export default class API {
     static async getProject(id: number) {
         const { data } = await axios(`${URL}projects/` + id);
         return data as IProject;
+    }
+    static async updateJam(jamData: JamData) {
+        const { data } = await axios.post(`${URL}jam.update`, jamData, {
+            headers: {
+                authorization: API.token,
+            },
+        });
+        return data;
+    }
+    static async updateProject(projectData: IProject) {
+        const { data } = await axios.post(`${URL}project.update`, projectData, {
+            headers: {
+                authorization: API.token,
+            },
+        });
+        return data;
     }
 }
