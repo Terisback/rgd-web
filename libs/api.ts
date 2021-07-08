@@ -6,6 +6,7 @@ export interface IProject {
     project: string;
     preview: string;
     description: string;
+    link: string;
 }
 export interface JamData {
     preview: string;

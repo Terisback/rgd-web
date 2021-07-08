@@ -129,6 +129,12 @@ function Jam({ jamData }: IJam) {
                     id="stream"
                 />
                 <Input
+                    name="Дата"
+                    value={jam.date}
+                    action={updateJam}
+                    id="date"
+                />
+                <Input
                     name="Изображение(URL)"
                     value={jam.preview}
                     action={updateJam}
@@ -279,6 +285,12 @@ function Project({ projectData }: IPr) {
                     value={project.description}
                     action={updateProject}
                     id="description"
+                />
+                <Input
+                    name="Ссылка"
+                    value={project.link}
+                    action={updateProject}
+                    id="link"
                 />
                 <Input
                     name="Изображение(URL)"
