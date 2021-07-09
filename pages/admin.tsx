@@ -1,5 +1,5 @@
 import React from "react";
-import API, { IProject, IUser, JamData } from "../libs/api";
+import API, { IALog, IProject, IUser, JamData } from "../libs/api";
 
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 
@@ -17,7 +17,7 @@ interface IInput {
 }
 
 function Input({ value, name, action, id }: IInput) {
-    const [input, setInput] = React.useState(value);
+    const [input, setInput] = React.useState(value || "");
     const handler = (e: React.ChangeEvent<HTMLInputElement>) => {
         action(id, e.target.value);
         setInput(e.target.value);
@@ -348,6 +348,42 @@ function ProjectsEditor() {
     );
 }
 
+function AdminLog() {
+    const [logs, setLogs] = React.useState([] as Array<IALog>);
+    React.useEffect(() => {
+        API.getAdminLog().then(async (_logs) => {
+            for (const log of _logs) {
+                const user = await API.getUser(log.user_id);
+                log.user = user[0];
+            }
+            setLogs(_logs);
+        });
+    }, []);
+    return (
+        <div>
+            {logs.reverse().map((log, index) => (
+                <div
+                    key={`log_${index}`}
+                    style={{
+                        border: "1px solid rgba(0,0,0,0.3)",
+                        margin: "5px",
+                    }}
+                >
+                    <h3
+                        style={{ display: "inline-flex", alignItems: "center" }}
+                    >
+                        <UserAvatar src={log.user.avatar} size={32} />
+                        {log.user.username}
+                    </h3>
+
+                    <pre>{log.message}</pre>
+                    <div>{log.time}</div>
+                </div>
+            ))}
+        </div>
+    );
+}
+
 export default function Admin({
     isAdmin,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
@@ -356,10 +392,13 @@ export default function Admin({
         return (
             <FlexCenter>
                 <div style={{ width: "60%" }}>
-                    <div>
-                        <h1>Поиск</h1>
+                    <Accordion value="Список изменений">
+                        <AdminLog />
+                    </Accordion>
+                    <Accordion value=" поиск людей">
                         <SearchInput />
-                    </div>
+                    </Accordion>
+
                     <Accordion value="Редактор джемов">
                         <div style={{ maxWidth: "100%" }}>
                             <JamEditor />

@@ -72,6 +72,14 @@ export const UserTemplate: IUser = {
     project: [],
 };
 
+export interface IALog {
+    user_id: string;
+    user: IUser;
+    _id: string;
+    time: string;
+    message: string;
+}
+
 const URL = "https://api.rgd.chat/";
 //const URL = "http://localhost:5001/";
 export default class API {
@@ -124,5 +132,13 @@ export default class API {
             },
         });
         return data;
+    }
+    static async getAdminLog() {
+        const { data } = await axios.get(`${URL}admin.log`, {
+            headers: {
+                authorization: API.token,
+            },
+        });
+        return data as Array<IALog>;
     }
 }
