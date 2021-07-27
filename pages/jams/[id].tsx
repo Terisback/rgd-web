@@ -7,7 +7,7 @@ import Head from "next/head";
 import style from "../../styles/jam.module.css";
 import projectStyle from "../../styles/projects.module.css";
 
-import { IProject, IUser, JamData } from "../../libs/api";
+import { IProject, IUser, IJam } from "../../libs/api";
 import API from "../../libs/api";
 import FlexCenter from "../../Components/useful/FlexCenter";
 import UserAvatar from "../../Components/useful/UserAvatar";
@@ -38,18 +38,20 @@ const Game = ({ game, pos }: GameProps) => {
 };
 
 export default function JamByID({
-    jam,
+    jamData,
     users,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+    const jam: IJam = jamData;
+    if (typeof jam?._id === "undefined") return null;
     return (
         <FlexCenter>
             <Head>
-                <title>{jam?.title}</title>
+                <title>{jam.name}</title>
             </Head>
-            <div>
+            <>
                 <div className={style.title}>
-                    <h1>{jam?.title}</h1>
-                    <img src={jam?.preview} />
+                    <h1>{jam.name}</h1>
+                    <img src={jam.picture} />
                 </div>
                 <div className={style.main}>
                     <div>
@@ -79,7 +81,7 @@ export default function JamByID({
                                 (game: IProject, index: number) => (
                                     <Game
                                         game={game}
-                                        key={"game_" + game.id}
+                                        key={"game_" + game._id}
                                         pos={index}
                                     />
                                 )
@@ -87,14 +89,14 @@ export default function JamByID({
                         </div>
                     </div>
                 </div>
-            </div>
+            </>
         </FlexCenter>
     );
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-    const jam: JamData = await API.getJam(Number(context.query.id));
+    const jamData: IJam = await API.getJam("" + context.query.id);
     return {
-        props: { jam },
+        props: { jamData },
     };
 };

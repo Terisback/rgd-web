@@ -8,4 +8,5 @@
 
 .userAvatar {
     border-radius: 100%;
+    object-fit: cover;
 }

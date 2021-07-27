@@ -141,7 +141,7 @@ export default function Profile({
                                 <div>Уровень увожения: {user.rep}</div>
                                 {user.part ? (
                                     <div>
-                                        Женат на: {user.part.username}#
+                                        В браке с: {user.part.username}#
                                         {user.part.tag}
                                     </div>
                                 ) : (
@@ -171,7 +171,7 @@ export default function Profile({
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const users = await API.getUser(context.query.id as string);
-    const data = users[0];
+    const data = users;
     return {
         props: { data },
     };

@@ -1,25 +1,31 @@
 import axios from "axios";
 
 export interface IProject {
-    id: number;
+    _id: number;
     user_id: Array<IUser>;
     project: string;
     preview: string;
     description: string;
     link: string;
 }
-export interface JamData {
-    preview: string;
-    title: string;
-    date: string;
+export interface IJam {
+    _id: string;
+
+    name: string;
+
     description: string;
-    liveStatus: boolean;
-    id: number;
-    projects: Array<IProject>;
-    fond: string;
-    fondPerPlayer: number;
-    votes: Array<object>;
+
+    picture: string;
+
+    link: string;
+
     stream: string;
+
+    date: string;
+
+    fond: string;
+
+    projects: IProject[];
 }
 
 export interface IRole {
@@ -81,26 +87,49 @@ export interface IALog {
 }
 
 const URL = "https://api.rgd.chat/";
-//const URL = "http://localhost:5001/";
+//const URL = "http://localhost:5000/";
+
+interface IExecuteConfig {
+    path: string;
+}
+
 export default class API {
     static token = "";
-    static async getJams() {
-        const { data } = await axios(URL);
-        return data.items as Array<JamData>;
+
+    static async execute<Type>(config: IExecuteConfig) {
+        const response = await axios(URL + config.path);
+        return response.data as Type;
     }
-    static async getJam(id: number) {
-        const { data } = await axios(URL + "jam/" + id);
-        return data as JamData;
-    }
-    static async getUser(...args: string[]) {
-        let url = URL + "user";
-        if (args.length == 0) {
-            url += "?token=" + API.token;
+
+    static async login(code: string) {
+        const response = await this.execute<any>({
+            path: "discord?code=" + code,
+        });
+        if (typeof response.error === "undefined") {
+            return response;
         } else {
-            url += "?id=" + args.join(",");
+            alert(response.error);
+            return undefined;
+        }
+    }
+
+    static async getJams() {
+        const response = await this.execute<Array<IJam>>({ path: "jams" });
+        return response;
+    }
+    static async getJam(id: string) {
+        const response = await this.execute<IJam>({ path: "jams/" + id });
+        return response;
+    }
+    static async getUser(args?: string) {
+        let url = URL;
+        if (args == undefined) {
+            url += "account?token=" + API.token;
+        } else {
+            url += "users/" + args;
         }
         const { data } = await axios(url);
-        return data as Array<IUser>;
+        return data as IUser;
     }
     static async Search(query: string) {
         const { data } = await axios(
@@ -117,7 +146,7 @@ export default class API {
         const { data } = await axios(`${URL}projects/` + id);
         return data as IProject;
     }
-    static async updateJam(jamData: JamData) {
+    static async updateJam(jamData: IJam) {
         const { data } = await axios.post(`${URL}jam.update`, jamData, {
             headers: {
                 authorization: API.token,

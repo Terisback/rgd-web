@@ -1,5 +1,5 @@
 import React from "react";
-import { JamData } from "../libs/api";
+import { IJam } from "../libs/api";
 import API from "../libs/api";
 import Link from "next/link";
 import style from "../styles/jams.module.css";
@@ -7,29 +7,22 @@ import Loading from "../Components/loading";
 import FlexCenter from "../Components/useful/FlexCenter";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 
-export function Jam({
-    preview,
-    title,
-    date,
-    description,
-    liveStatus,
-    id,
-}: JamData) {
+export function Jam(data: IJam) {
+    ///{data.liveStatus ? <span className={style.cardLive}>LIVE</span> : ""}
     return (
-        <Link href={`/jams/${id}`}>
-            <a className={style.card} href={`/jams/${id}`}>
-                {liveStatus ? <span className={style.cardLive}>LIVE</span> : ""}
+        <Link href={`/jams/${data._id}`}>
+            <a className={style.card} href={`/jams/${data._id}`}>
                 <div
                     className={style.cardImage}
-                    style={{ backgroundImage: `url(${preview})` }}
+                    style={{ backgroundImage: `url(${data.picture})` }}
                 />
                 <div className={style.cardBody}>
                     <div className={style.cardDate}>
                         <img src="/icons/clock.svg" width="22em" />
-                        {date}
+                        {data.date}
                     </div>
-                    <h3>{title}</h3>
-                    <div>{description}</div>
+                    <h3>{data.name}</h3>
+                    <div>{data.description}</div>
                 </div>
             </a>
         </Link>
@@ -51,13 +44,12 @@ export default function Jems({
                         />
                         Джемы
                     </div>
-                    <div>back</div>
                 </h1>
                 <div className={style.jams}>
                     {data.length == 0 ? (
                         <Loading />
                     ) : (
-                        data.map((value: JamData, index: number) => (
+                        data.map((value: IJam, index: number) => (
                             <Jam {...value} key={`jam_${index}`} />
                         ))
                     )}
@@ -67,7 +59,8 @@ export default function Jems({
     );
 }
 export const getServerSideProps: GetServerSideProps = async () => {
-    const data: Array<JamData> = await API.getJams();
+    const data: Array<IJam> = await API.getJams();
+    data.reverse();
     return {
         props: { data },
     };

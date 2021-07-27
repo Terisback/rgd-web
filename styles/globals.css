@@ -11,7 +11,7 @@ body {
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
         Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-    background-color: var(--background);
+    background: linear-gradient(to right, #131314 0%, #1f212b 100%);
     color: var(--textColor);
 }
 
@@ -43,7 +43,8 @@ main {
 
 .Content {
     width: 100%;
-    padding: 0em 2em;
+    padding: 3em;
+    z-index: 5;
 }
 
 .Sidebar {
@@ -52,6 +53,7 @@ main {
     flex-basis: 280px;
     flex-shrink: 0;
     background-color: var(--sidebar);
+    z-index: 1;
 }
 
 @media screen and (max-width: 960px) {
@@ -62,14 +64,6 @@ main {
     main {
         flex-direction: column;
     }
-}
-
-a:link,
-a:visited,
-a:hover,
-a:active {
-    text-decoration: none;
-    color: #fff;
 }
 
 tr,

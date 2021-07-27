@@ -1,5 +1,5 @@
 import React from "react";
-import API, { IALog, IProject, IUser, JamData } from "../libs/api";
+import API, { IALog, IProject, IUser, IJam } from "../libs/api";
 
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 
@@ -8,37 +8,13 @@ import SearchInput from "../Components/useful/SearchInput";
 import FlexCenter from "../Components/useful/FlexCenter";
 import Accordion from "../Components/Accordion";
 import UserAvatar from "../Components/useful/UserAvatar";
+import { Input } from "../Components/useful/IInput";
 
-interface IInput {
-    value: string;
-    name: string;
-    id: string;
-    action: (key: string, value: string) => void;
+interface JamProps {
+    jamData: IJam;
 }
 
-function Input({ value, name, action, id }: IInput) {
-    const [input, setInput] = React.useState(value || "");
-    const handler = (e: React.ChangeEvent<HTMLInputElement>) => {
-        action(id, e.target.value);
-        setInput(e.target.value);
-    };
-    return (
-        <div style={{ marginBottom: "1em" }}>
-            {name}
-            <input
-                value={input}
-                style={{ marginLeft: "1em" }}
-                onChange={handler}
-            />
-        </div>
-    );
-}
-
-interface IJam {
-    jamData: JamData;
-}
-
-function Jam({ jamData }: IJam) {
+function Jam({ jamData }: JamProps) {
     const [jam, setJam] = React.useState(jamData);
 
     const updateJam = (key: string, value: string) => {
@@ -71,7 +47,7 @@ function Jam({ jamData }: IJam) {
         }, []);
         return (
             <div>
-                {project.project} (ID: {project.id})
+                {project.project} (ID: {project._id})
             </div>
         );
     };
@@ -102,11 +78,11 @@ function Jam({ jamData }: IJam) {
     };
 
     return (
-        <Accordion value={`${jam.title} (ID: ${jam.id})`}>
+        <Accordion value={`${jam.name} (ID: ${jam._id})`}>
             <div>
                 <Input
                     name="Название"
-                    value={jam.title}
+                    value={jam.name}
                     action={updateJam}
                     id="title"
                 />
@@ -136,12 +112,12 @@ function Jam({ jamData }: IJam) {
                 />
                 <Input
                     name="Изображение(URL)"
-                    value={jam.preview}
+                    value={jam.picture}
                     action={updateJam}
                     id="preview"
                 />
                 <div>
-                    <img src={jam.preview} width="128px" />
+                    <img src={jam.picture} width="128px" />
                 </div>
                 <Accordion value={`Проекты ${jam.projects.length}`}>
                     <table width="100%">
@@ -179,13 +155,13 @@ function Jam({ jamData }: IJam) {
 }
 
 function JamEditor() {
-    const [jams, setJams] = React.useState([] as Array<JamData>);
+    const [jams, setJams] = React.useState([] as Array<IJam>);
     React.useEffect(() => {
         API.getJams().then(setJams);
     }, []);
     return (
         <div>
-            {jams.map((jam: JamData, index: number) => {
+            {jams.map((jam: IJam, index: number) => {
                 return <Jam jamData={jam} key={"jam_" + index} />;
             })}
         </div>
@@ -215,7 +191,7 @@ function Project({ projectData }: IPr) {
 
         const onInput = (event: React.ChangeEvent<HTMLInputElement>) => {
             setInput(event.target.value);
-            API.getUser(event.target.value).then((users) => setUser(users[0]));
+            API.getUser(event.target.value).then((users) => setUser(users));
         };
         const addUser = () => {
             project.user_id.unshift(input as unknown as IUser);
@@ -256,7 +232,7 @@ function Project({ projectData }: IPr) {
                 } as IUser);
             } else {
                 API.getUser(user).then((users) => {
-                    setData(users[0]);
+                    setData(users);
                 });
             }
         }, []);
@@ -272,7 +248,7 @@ function Project({ projectData }: IPr) {
     };
 
     return (
-        <Accordion value={`${project.project} (ID: ${project.id})`}>
+        <Accordion value={`${project.project} (ID: ${project._id})`}>
             <div>
                 <Input
                     name="Название"
@@ -354,7 +330,7 @@ function AdminLog() {
         API.getAdminLog().then(async (_logs) => {
             for (const log of _logs) {
                 const user = await API.getUser(log.user_id);
-                log.user = user[0];
+                log.user = user;
             }
             setLogs(_logs);
         });
@@ -419,10 +395,7 @@ export default function Admin({
 export const getServerSideProps: GetServerSideProps = async (context) => {
     API.token = context.req.cookies?.token;
     const user = await API.getUser();
-    let isAdmin = false;
-    if (user.length > 0) {
-        isAdmin = user[0].admin; //context.User.admin;
-    }
+    let isAdmin = user?.admin;
     return {
         props: { isAdmin },
     };

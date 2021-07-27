@@ -10,6 +10,7 @@ export default function UserAvatar({ src, size = 32 }: UserAvatarProps) {
         <img
             src={src}
             width={size + "em"}
+            height={size + "em"}
             alt="аватарка"
             className={style.userAvatar}
         />

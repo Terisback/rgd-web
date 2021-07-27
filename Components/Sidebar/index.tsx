@@ -28,7 +28,7 @@ export default function Sidebar() {
                     window.location.href = window.location.origin;
                     return;
                 }
-                context.setUser(users[0]);
+                context.setUser(users);
             });
         }
     }
