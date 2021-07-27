@@ -6,9 +6,9 @@
 Написан на TypeScript
 
 Frontend:
-  -React
-  -Next JS
+  - React
+  - Next JS
 
 Backend:
-  -NestJS
+  - NestJS
 
