@@ -1,14 +1,19 @@
-# Сайтик Russian GameDev
-![alt](https://cdn.jsdelivr.net/gh/DamirLut/rgd-web@main/public/rgd.png)
+<img 
+  width="320"
+  src="public/rgd.png" 
+  alt="Russian Gamedev Community"
+/>
 
-Ссылочка на дискорд сервер: https://discord.gg/5kZhhWD
+<a href="https://discord.gg/YYsJez7nRn">
+  <img 
+    src="https://discordapp.com/api/guilds/504617984594018325/widget.png?style=banner2" 
+    alt="Та самая впечатляюще широкая кнопка, на которую нужно нажать, чтобы присоединится к серверу"
+  />
+</a>
 
-Написан на TypeScript
+Исходники фронтэнда [rgd.chat](https://rgd.chat/).  
+Бэкенд на данный момент остаётся приватным
 
-Frontend:
+## Технологии
   - React
-  - Next JS
-
-Backend:
-  - NestJS
-
+  - Next.js
